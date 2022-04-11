@@ -32,6 +32,16 @@ public class Testing {
         setResultOfClassClassification(realClassName, isCorrectClassification);
     }
 
+    private double classProbability(String className, String[] instance) {
+        double probability = statistic.getPriorProbabilityOf(className);
+        for (int i = 0; i < indexOfClass; i++) {
+            String attribute = instance[i];
+            double attributeProbability = statistic.getProbabilityOf(className, i, attribute);
+            probability *= attributeProbability;
+        }
+        return probability;
+    }
+
     private void setResultOfClassClassification(String className, boolean isCorrectlyClassified) {
         Integer number;
         if (isCorrectlyClassified) {
@@ -58,31 +68,9 @@ public class Testing {
         return (correct / all) * 100;
     }
 
-    private double classProbability(String className, String[] instance) {
-        double probability = statistic.getPriorProbabilityOf(className);
-        for (int i = 0; i < indexOfClass; i++) {
-            String attribute = instance[i];
-            double attributeProbability = statistic.getProbabilityOf(className, i, attribute);
-            probability *= attributeProbability;
-        }
-        return probability;
-    }
-
-    private static class MyComparator implements Comparator<Double> {
-        @Override
-        public int compare(Double o1, Double o2) {
-            if (o1 > o2) {
-                return -1;
-            } else if (o1 < o2) {
-                return 1;
-            }
-            return 0;
-        }
-    }
-
     public double getPercentOfCorrectClassification() {
         double correct = counterOfCorrectClassification;
-        double all = data.size();
+        double all = data.size() - statistic.getNumberForTraining();
         return (correct / all) * 100;
     }
 
@@ -99,6 +87,18 @@ public class Testing {
 
     public void printResult() {
         System.out.println(results());
+    }
+
+    private static class MyComparator implements Comparator<Double> {
+        @Override
+        public int compare(Double o1, Double o2) {
+            if (o1 > o2) {
+                return -1;
+            } else if (o1 < o2) {
+                return 1;
+            }
+            return 0;
+        }
     }
 
 }

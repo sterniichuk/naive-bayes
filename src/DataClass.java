@@ -11,9 +11,9 @@ public class DataClass {
     Integer - counter of all attributes for current class
     Example of attributes data structure
     _____________________________________________________________________________________
-    |Index  |    |                  Attributes                                          |
+    | Index |    |                  Attributes                                          |
     |   0   | -> | Hashtable -> [Red, 10], [Green, 14], [Yellow, 100]                   |
-    |   1   | -> | Hashtable -> [Big, 50], [Small, 78]|                                 |
+    |   1   | -> | Hashtable -> [Big, 50], [Small, 78]                                  |
     |   2   | -> | Hashtable -> [Circle, 8], [Triangle, 78], [Rectangle, 45], [Oval, 1] |
     |   3   | -> | Hashtable -> [Male, 7], [Female, 5]                                  |
     |_______|____|______________________________________________________________________|

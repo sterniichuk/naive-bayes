@@ -18,11 +18,11 @@ public class Statistic {
     private void calculatePriorProbability() {
         Set<String> classNames = classTable.keySet();
         for(String className : classNames){
-            priorProbability.put(className, calculatePriorProbability(className));
+            priorProbability.put(className, calculatePriorProbabilityOf(className));
         }
     }
 
-    private double calculatePriorProbability(String className) {
+    private double calculatePriorProbabilityOf(String className) {
         double counterOfClass = classTable.get(className).getCounterOfClass();
         return counterOfClass / numberForTraining;
     }
@@ -31,10 +31,10 @@ public class Statistic {
         return priorProbability.get(className);
     }
 
-    public double getProbabilityOf(String className, int indexOfAttribute, String kindOfAttribute) {
-        double counterOfAttributeForClass = classTable.get(className).getCounterOf(indexOfAttribute, kindOfAttribute);
-        double counterOfInstancesOfThisKindOfAttribute = counter.getCounterOf(indexOfAttribute, kindOfAttribute);
-        return counterOfAttributeForClass / counterOfInstancesOfThisKindOfAttribute;
+    public double getProbabilityOf(String className, int indexOfAttribute, String valueOfAttribute) {
+        double counterOfAttributeForClass = classTable.get(className).getCounterOf(indexOfAttribute, valueOfAttribute);
+        double counterOfInstancesOfThisValueOfAttribute = counter.getCounterOf(indexOfAttribute, valueOfAttribute);
+        return counterOfAttributeForClass / counterOfInstancesOfThisValueOfAttribute;
     }
 
     public void printStatistic(){

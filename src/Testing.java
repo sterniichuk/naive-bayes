@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.function.Function;
 
 public class Testing {
     private final Statistic statistic;
@@ -22,10 +23,10 @@ public class Testing {
 
     private void test(String[] instance) {
         TreeMap<Double, String> results = new TreeMap<>((new MyComparator()));
-        for (String className : classNames) {
+        classNames.forEach(className -> {
             double probability = classProbability(className, instance);
             results.put(probability, className);
-        }
+        });
         String possibleClass = results.get(results.firstKey());
         String realClassName = instance[indexOfClass];
         boolean isCorrectClassification = realClassName.equals(possibleClass);
@@ -61,7 +62,7 @@ public class Testing {
 
     private double getPercentOfCorrectClassClassification(String className) {
         Integer correct = correctClassifiedClass.get(className);
-        if(correct == null){
+        if (correct == null) {
             return 0;
         }
         double all = allClassifiedClass.get(className);
@@ -76,14 +77,16 @@ public class Testing {
 
     public String results() {
         String percent = String.format("%.3f", (getPercentOfCorrectClassification()));
-        String result = "Naive Bayes algorithm has correctly classified " + percent + "% of test data set\n";
-        for(String className : classNames){
-            percent = String.format("%.3f", getPercentOfCorrectClassClassification(className));
-            String str = className + " is correctly classified " + percent + "%\n";
-            result = result.concat(str);
-        }
-        return result;
+        StringBuffer result = new StringBuffer("Naive Bayes algorithm has correctly classified " +
+                percent + "% of test data set\n");
+        classNames.forEach(className -> result.append(printClassifiedPercentOfClass.apply(className)));
+        return result.toString();
     }
+
+    private final Function<String, String> printClassifiedPercentOfClass = className -> {
+        String percent = String.format("%.3f", getPercentOfCorrectClassClassification(className));
+        return className + " is correctly classified " + percent + "%\n";
+    };
 
     public void printResult() {
         System.out.println(results());

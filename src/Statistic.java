@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
+import java.util.function.Function;
 
 public class Statistic {
     private final Hashtable<String, DataClass> classTable;
@@ -17,9 +18,7 @@ public class Statistic {
 
     private void calculatePriorProbability() {
         Set<String> classNames = classTable.keySet();
-        for(String className : classNames){
-            priorProbability.put(className, calculatePriorProbabilityOf(className));
-        }
+        classNames.forEach(className -> priorProbability.put(className, calculatePriorProbabilityOf(className)));
     }
 
     private double calculatePriorProbabilityOf(String className) {
@@ -37,28 +36,30 @@ public class Statistic {
         return counterOfAttributeForClass / counterOfInstancesOfThisValueOfAttribute;
     }
 
-    public void printStatistic(){
+    public void printStatistic() {
         Set<String> classNames = classTable.keySet();
         System.out.println();
-        for(String className : classNames){
+        classNames.forEach(className -> {
             DataClass dataClass = classTable.get(className);
             String probability = String.format("%.3f", (getPriorProbabilityOf(className) * 100));
             System.out.println("Class name: " + className + " has " + probability
-            + "% priorProbability. Class has " + dataClass.getCounterOfClass() + " instances");
+                    + "% priorProbability. Class has " + dataClass.getCounterOfClass() + " instances");
             ArrayList<Hashtable<String, Integer>> attributes = dataClass.getAttributes();
             for (int i = 0; i < attributes.size(); i++) {
-                System.out.println("Attribute index is " + i);
-                Hashtable<String, Integer> attribute =  attributes.get(i);
+                int attributeIndex = i;
+                System.out.println("Attribute index is " + attributeIndex);
+                Hashtable<String, Integer> attribute = attributes.get(attributeIndex);
                 Set<String> instancesOfAttribute = attribute.keySet();
-                for(String nameOfAttribute : instancesOfAttribute){
-                    int number = dataClass.getCounterOf(i, nameOfAttribute);
+                instancesOfAttribute.forEach(nameOfAttribute -> {
+                    int number = dataClass.getCounterOf(attributeIndex, nameOfAttribute);
                     System.out.print(nameOfAttribute + " = " + number + "; ");
-                }
+                });
                 System.out.println();
             }
             System.out.println();
-        }
+        });
     }
+
 
     public Hashtable<String, DataClass> getClassTable() {
         return classTable;

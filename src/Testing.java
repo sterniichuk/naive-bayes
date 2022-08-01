@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 public class Testing {
     private final Statistic statistic;
@@ -16,9 +17,7 @@ public class Testing {
         this.data = data;
         this.indexOfClass = data.get(0).length - 1;
         classNames = statistic.getClassTable().keySet();
-        for (int i = numberForLearning; i < data.size(); i++) {
-            test(data.get(i));
-        }
+        IntStream.range(numberForLearning, data.size()).forEach(i -> test(data.get(i)));
     }
 
     private void test(String[] instance) {
@@ -103,6 +102,5 @@ public class Testing {
             return 0;
         }
     }
-
 }
 

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.stream.IntStream;
 
 public class DataClass {
     private final String name;
@@ -31,9 +32,7 @@ public class DataClass {
     }
 
     public void count(String[] instance) {
-        for (int i = 0; i < numberOfAttributes; i++) {
-            increase(i, instance[i]);
-        }
+        IntStream.range(0, numberOfAttributes).forEach(i -> increase(i, instance[i]));
         counterOfClass++;
     }
 

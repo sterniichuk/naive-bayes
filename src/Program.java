@@ -5,6 +5,11 @@ public class Program {
     private ArrayList<String[]> data;
     private FileManager fileManager;
 
+    public static void main(String[] args) {
+        Program program = new Program();
+        program.start();
+    }
+
     public void start() {
         fileManager = new FileManager();
         data = fileManager.getData();

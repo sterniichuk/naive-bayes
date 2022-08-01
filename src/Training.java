@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class Training {
     private final Hashtable<String, DataClass> classTable = new Hashtable<>();
@@ -29,9 +30,7 @@ public class Training {
          * І при тестуванні ймовірність, що "high" належить до класу "acc" буде 392/393, а для
          * класу "vgood" лише 1/393
          * */
-        for (int i = 0; i < numberForTraining; ++i) {
-            count(data.get(i));
-        }
+        IntStream.range(0, numberForTraining).forEach(i -> count(data.get(i)));
         statistic = new Statistic(classTable, counter, numberForTraining);
         addBlackBoxes();
     }
